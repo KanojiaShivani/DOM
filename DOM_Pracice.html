@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Manipulation Practice</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      #task-list li {
+        margin: 5px 0;
+      }
+      #task-list li button {
+        margin-left: 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>DOM Manipulation Practice</h1>
+    <p id="description">
+      This is a sample paragraph. You will change this text using JavaScript.
+    </p>
+
+    <button id="change-text-btn">Change Paragraph Text</button>
+    <br /><br />
+    <img
+      id="image"
+      src="https://via.placeholder.com/150"
+      alt="Placeholder Image"
+      width="150"
+    />
+    <br /><br />
+    <button id="change-image-btn">Change Image</button>
+    <br /><br />
+    <input type="text" id="input-field" placeholder="Type something..." />
+    <div id="input-display"></div>
+    <br />
+    <h2>Task List</h2>
+    <ul id="task-list">
+      <li>Sample Task 1 <button class="remove-btn">Remove</button></li>
+      <li>Sample Task 2 <button class="remove-btn">Remove</button></li>
+    </ul>
+    <input type="text" id="task-input" placeholder="Add a new task" />
+    <button id="add-task-btn">Add Task</button>
+    <br /><br />
+    <button id="remove-last-task-btn">Remove Last Task</button>
+    <script>
+      // Selecting Elements
+      const descriptionParagraph = document.getElementById("description");
+      const changeTextBtn = document.querySelector("#change-text-btn");
+      const image = document.getElementById("image");
+      const changeImageBtn = document.getElementById("change-image-btn");
+      const inputField = document.getElementById("input-field");
+      const inputDisplay = document.getElementById("input-display");
+      const taskInput = document.getElementById("task-input");
+      const addTaskBtn = document.getElementById("add-task-btn");
+      const taskList = document.getElementById("task-list");
+      const removeLastTaskBtn = document.getElementById("remove-lasttask-btn");
+      // Modifying Content and Attributes
+      changeTextBtn.addEventListener("click", function () {
+        descriptionParagraph.textContent =
+          "The paragraph text has been changed using JavaScript!";
+      });
+      changeImageBtn.addEventListener("click", function () {
+        image.src = "https://via.placeholder.com/200";
+        image.alt = "Updated Placeholder Image";
+      });
+      // Event Handling
+      inputField.addEventListener("input", function (event) {
+        inputDisplay.textContent = `You typed: ${event.target.value}`;
+      });
+      // Adding a New Task
+      addTaskBtn.addEventListener("click", function () {
+        const newTask = taskInput.value;
+        if (newTask !== "") {
+          const newLi = document.createElement("li");
+          newLi.textContent = newTask;
+
+          const removeBtn = document.createElement("button");
+          removeBtn.textContent = "Remove";
+          removeBtn.className = "remove-btn";
+          removeBtn.style.marginLeft = "10px";
+          removeBtn.style.cursor = "pointer";
+          removeBtn.addEventListener("click", function () {
+            newLi.remove();
+          });
+          newLi.appendChild(removeBtn);
+          taskList.appendChild(newLi);
+          taskInput.value = ""; // Clear input field
+        }
+      });
+      // Removing the Last Task
+      removeLastTaskBtn.addEventListener("click", function () {
+        if (taskList.lastElementChild) {
+          taskList.lastElementChild.remove();
+        }
+      });
+      // Adding Remove Event Listeners to Existing Tasks
+      document.querySelectorAll(".remove-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          btn.parentElement.remove();
+        });
+      });
+    </script>
+  </body>
+</html>
